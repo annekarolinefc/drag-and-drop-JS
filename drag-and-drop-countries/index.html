@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: space-between;
+        }
+        .container-soltar{
+            padding: 10px;
+            width: 400px;
+            min-height: 100px;
+            background-color: blue;
+        }
+        [draggable = "true"]{
+            padding: 13px;
+            margin-bottom: 10px;
+            background-color: rgb(248,157,157);
+        }
+        .hover{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="elementos-arrastaveis">
+        <div draggable="true">
+            Brasil
+        </div>
+        <div draggable="true">
+            EUA
+        </div>
+        <div draggable="true">
+            Portugal
+        </div>
+    </div>
+    <div class="container-soltar">
+
+    </div>
+
+    <script>
+        //pegando os elementos
+        const palavras = document.querySelectorAll("[draggable='true']");
+        //pegando o container soltar
+        const containerSoltar = document.querySelector(".container-soltar")
+        
+        //criando a função arrastar
+        function comecarArrastar(){
+            console.log("começou a arrastar");
+
+            //adicionar uma classe para ele
+            this.classList.add("arrastando")
+        }
+
+        function entrouSoltar(){
+            //quando entrar na região, a classe hover sera adicionada ao elemento
+            this.classList.add("hover");
+
+            //capturar o elemento que estou arrastando
+            const elementoArrastado = document.querySelector(".arrastando")
+
+            //adicionar o elemento dentro do container
+            this.appendChild(elementoArrastado);
+        }
+
+        function saiuSoltar(){
+            this.classList.remove("hover")
+        }
+
+        //aplicando a propriedade de arrastar para cada elemento
+        palavras.forEach((palavra) => {
+            //quando comecar a arrastar, o que deve ser feito
+            palavra.addEventListener("dragstart", comecarArrastar);
+        })
+
+        containerSoltar.addEventListener("dragover", entrouSoltar);
+        //dragover significa que entrou na regiao para soltar
+
+        containerSoltar.addEventListener("dragleave", saiuSoltar())
+    </script>
+</body>
+</html>
